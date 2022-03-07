@@ -1,16 +1,19 @@
 <template>
-    <div class=' title' > 
-        {{msg}}
+    <div class="wrap ">
+        <TopMenuVue/>
     </div>
 </template>
 
 <script setup lang="ts">
-    const msg = 'hello electron'
+import TopMenuVue from './top-menu.vue';
+import UserMenuVue from './user-menu.vue';
+
+
 </script>
 
 <style lang="scss">
-.title{
-    @apply bg-emerald-300  h-10  flex justify-center items-center text-xl font-medium text-slate-100;
-    -webkit-app-region: drag
-}    
+.wrap {
+    width: 100vw;
+    height: 100vh;
+}
 </style>

@@ -4,14 +4,14 @@ import './NotificationMsg'
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 828,
-    height: 600,
+    width: 1000,
+    height: 668,
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.cjs'),
       nodeIntegration: true,
     },
-    minWidth:600,
-    minHeight:456,
+    minWidth:1000,
+    minHeight:668,
     titleBarStyle: 'hidden' ,
     frame: false
   })

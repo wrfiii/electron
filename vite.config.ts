@@ -1,7 +1,7 @@
-// import { defineConfig } from "vite"
+import { defineConfig } from "vite";
 import vue from '@vitejs/plugin-vue';
 import path from "path";
-export default ({
+export default defineConfig({
     base:'./',
     server: {
         port: 9527
@@ -11,5 +11,13 @@ export default ({
         alias:{
             "@/":path.join(path.resolve(),'./src/')
         }
+    },
+    css:{
+        preprocessorOptions:{
+            scss:{
+                additionalData:"@import 'src/assets/css/var.scss';"
+            }
+        }
     }
+    
 })
