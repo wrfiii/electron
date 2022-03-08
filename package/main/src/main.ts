@@ -1,6 +1,7 @@
-import { app, BrowserWindow ,Menu} from 'electron'
+import { app, BrowserWindow, Menu } from 'electron'
 const path = require('path');
-import './NotificationMsg'
+import './NotificationMsg';
+import winSetSize from './windowSize';
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -10,17 +11,22 @@ function createWindow() {
       preload: path.join(__dirname, '../preload/index.cjs'),
       nodeIntegration: true,
     },
-    minWidth:1000,
-    minHeight:668,
-    titleBarStyle: 'hidden' ,
+    minWidth: 1000,
+    minHeight: 668,
+    titleBarStyle: 'hidden',
+    trafficLightPosition: {
+      x: 10,
+      y: 10
+    },
     frame: false
   })
-  console.log(app.isPackaged,'app.isPackaged')
   if (app.isPackaged) {
     win.loadFile(path.join(__dirname, '../index.html'))
   } else {
     win.loadURL('http://localhost:9527')
   }
+
+  winSetSize(win)
 }
 
 if (!app.requestSingleInstanceLock()) {
@@ -45,6 +51,5 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-
 
 
