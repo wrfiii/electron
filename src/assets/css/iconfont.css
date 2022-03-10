@@ -1,0 +1,128 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('../font/iconfont.ttf') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-31sousuo:before {
+  content: "\f01fd";
+}
+
+.icon-jiahao1:before {
+  content: "\e727";
+}
+
+.icon-shezhi:before {
+  content: "\e74c";
+}
+
+.icon-touxiang:before {
+  content: "\e655";
+}
+
+.icon-shipin:before {
+  content: "\e637";
+}
+
+.icon-49xiayishou:before {
+  content: "\e611";
+}
+
+.icon-047caozuo_shangyishou:before {
+  content: "\e61f";
+}
+
+.icon-xihuan:before {
+  content: "\e613";
+}
+
+.icon-bofang:before {
+  content: "\e87c";
+}
+
+.icon-shunxubofang:before {
+  content: "\e626";
+}
+
+.icon-huanfu:before {
+  content: "\e622";
+}
+
+.icon-youxiang:before {
+  content: "\e668";
+}
+
+.icon-guanbi:before {
+  content: "\eca0";
+}
+
+.icon-xiazai-:before {
+  content: "\e648";
+}
+
+.icon-24gl-volumeZero:before {
+  content: "\ea0d";
+}
+
+.icon-music:before {
+  content: "\e6c5";
+}
+
+.icon-danquxunhuan:before {
+  content: "\e62e";
+}
+
+.icon-bofangliebiao:before {
+  content: "\e6c6";
+}
+
+.icon-pengyou:before {
+  content: "\e91d";
+}
+
+.icon-zuijinbofang:before {
+  content: "\e508";
+}
+
+.icon-liebiaoxunhuan:before {
+  content: "\e612";
+}
+
+.icon-xiajiantou:before {
+  content: "\e62b";
+}
+
+.icon-zuojiantou:before {
+  content: "\e60b";
+}
+
+.icon-youjiantou:before {
+  content: "\e60c";
+}
+
+.icon-shangjiantou:before {
+  content: "\e60a";
+}
+
+.icon-xiajiantou1:before {
+  content: "\e60d";
+}
+
+.icon-suijibofang:before {
+  content: "\e6a0";
+}
+
+.icon-radioguangbo:before {
+  content: "\e6de";
+}
+
+.icon-zanting:before {
+  content: "\e63d";
+}
+

@@ -15,7 +15,7 @@ export default defineConfig({
     css:{
         preprocessorOptions:{
             scss:{
-                additionalData:"@import 'src/assets/css/var.scss';"
+                additionalData:"@import 'src/assets/css/var.scss';@import 'src/assets/css/iconfont.css';"
             }
         }
     }

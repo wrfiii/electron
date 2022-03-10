@@ -1,10 +1,9 @@
 import { app, BrowserWindow, Menu } from 'electron'
-const path = require('path');
-import './NotificationMsg';
-import winSetSize from './windowSize';
-
+import path = require('path');
+import './evnt/index';
+let win: BrowserWindow;
 function createWindow() {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 1000,
     height: 668,
     webPreferences: {
@@ -25,8 +24,6 @@ function createWindow() {
   } else {
     win.loadURL('http://localhost:9527')
   }
-
-  winSetSize(win)
 }
 
 if (!app.requestSingleInstanceLock()) {
@@ -47,9 +44,14 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
+  // if (process.platform !== 'darwin') {
+  //   alert()
+    app.quit();
+  // }
 })
+
+export default ()=>{
+  return win
+};
 
 

@@ -1,10 +1,10 @@
 <template>
     <div class="flex h-12 select-none" style="-webkit-app-region : drag;" ref="topBar">
-        <div class="l-btn pt-3 bg-slate-100 flex justify-end p-2 pr-3 border-white">
-            <ChevronLeftIcon class="h-6 w-6 rounded-full hover:bg-slate-100" />
-            <ChevronRightIcon class="h-6 w-6 rounded-full hover:bg-slate-100" />
+        <div class="l-btn pt-3 bg-gray-50 flex justify-end p-2 pr-1  border-white">
+            <span class="iconfont icon-zuojiantou h-6 w-6 rounded-full text-xl hover:bg-slate-100"></span>
+            <span class="iconfont icon-youjiantou h-6 w-6 rounded-full text-xl hover:bg-slate-100"></span>
         </div>
-        <div class="r-menu flex h-full bg-slate-50 flex-1">
+        <div class="r-menu flex h-full bg-gray-50 flex-1" @click.stop>
             <div class="flex h-full items-center text-sm pl-8">
                 <span
                     v-for="(item, index) in menu"

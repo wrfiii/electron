@@ -5,10 +5,12 @@
 
 <template>
   <router-view></router-view>
-</template>
+</template> 
 
 <style lang="scss"> 
 
-
+span{
+  user-select:unset ;
+}
 
 </style>

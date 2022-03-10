@@ -1,33 +1,28 @@
 
 export const doubleClick = (el: HTMLElement, cb: () => void) => {
-
     el.addEventListener('click',
-        fo(cb, 1000)
+        function (event) {
+            event.stopPropagation();
+            fo(cb, 300)
+        }
     )
 }
+let cont = 0;
+let timer: NodeJS.Timeout | null = null;
 
 const fo = (fn: Function, time: number) => {
 
-    let cont = 0;
-    let timer: NodeJS.Timeout | null = null;
+    cont++;
 
-
-    return () => {
-
-        cont++;
-
-        if (cont === 2) {
-            cont = 0;
-            fn();
-            timer && clearTimeout(timer)
-            return
-        };
-
-        timer = setTimeout(() => {
-            cont = 0
-        }, time);
-
-    }
+    if (cont === 2) {
+        cont = 0;
+        fn();
+        timer && clearTimeout(timer)
+        return
+    };
+    timer = setTimeout(() => {
+        cont = 0
+    }, time);
 }
 
 

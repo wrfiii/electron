@@ -347,3 +347,7 @@
   [hidden] {
     display: none;
   }
+
+  span{
+    cursor: default;
+  }
