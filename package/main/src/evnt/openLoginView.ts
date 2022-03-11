@@ -25,6 +25,7 @@ export const openLoginView = () => {
     });
     win.loadURL('http://localhost:9527/#login');
     win.show();
+    // win.webContents.openDevTools();
 
     win.addListener('close', () => {
         win = null;

@@ -6,11 +6,11 @@
         </div>
         <div class="r-menu flex h-full bg-gray-50 flex-1" @click.stop>
             <div class="flex h-full items-center text-sm pl-8">
-                <span
+                <router-link :to="item.name"
                     v-for="(item, index) in menu"
                     :key="index"
                     class="mr-7 text-gray-500 hover:text-gray-900 cursor-default"
-                >{{ item.label }}</span>
+                >{{ item.label }}</router-link>
             </div>
 
             <div class="flex items-center pl-7 flex-1 justify-end">
@@ -33,27 +33,33 @@
 
 <script lang='ts' setup>
 import { ChevronLeftIcon, ChevronRightIcon, SearchIcon, CogIcon, MailIcon } from '@heroicons/vue/Solid'
-import { doubleClick } from '@/utils/dom-event';
+import { doubleClick } from '@/utils/index';
 import { onMounted, ref } from 'vue';
 
 const menu = [
     {
         label: '个性推荐',
+        name:'recommend'
     },
     {
         label: '歌单',
+        name:'songPlayList'
     },
     {
         label: '主播电台',
+        name:'radio'
     },
     {
         label: '排行榜',
+        name:'rankList'
     },
     {
         label: '歌手',
+        name:'songer'
     },
     {
         label: '最新音乐',
+        name:'newMusic'
     }
 ]
 const topBar = ref(null)

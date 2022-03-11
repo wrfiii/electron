@@ -15,6 +15,7 @@
     "@types/node": "^17.0.21",
     "@vitejs/plugin-vue": "^2.2.4",
     "autoprefixer": "^10.4.2",
+    "axios": "^0.26.1",
     "electron": "^17.1.0",
     "electron-builder": "^22.14.13",
     "eletron": "^0.0.1-security",

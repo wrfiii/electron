@@ -3,6 +3,7 @@
         <TopMenuVue />
         <section class="flex">
             <UserMenuVue />
+            <router-view></router-view>
         </section>
     </div>
 </template>

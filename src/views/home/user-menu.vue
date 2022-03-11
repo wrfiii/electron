@@ -6,8 +6,11 @@
                     class="iconfont icon-touxiang text-4xl text-gray-100 rounded-full leading-none"
                 ></span>
             </div>
-            <span class="ml-4 ft-12 text-sm text-slate-700 font-medium">未登录</span>
-            <span class="iconfont icon-bofang ml-2 text-xs text-slate-400"></span>
+        
+            <span class="ml-4 ft-12 text-sm text-slate-700 font-medium" >{{userStore.profile.nickname ? userStore.profile.nickname:'未登陆'}}</span>
+            <img :src="userStore.profile.avatarUrl" v-if="userStore.profile.avatarUrl" alt="">
+            <span class="iconfont icon-bofang ml-2 text-xs text-slate-400" v-else></span>
+
         </div>
 
         <div class="mt-5">
@@ -46,6 +49,8 @@
 
 <script setup lang='ts'>
 import useUserStore from '@/store/user';
+import { httpPost } from '@/utils/index';
+import { ref } from 'vue';
 
 const userMenuNav = [
     { icon: 'icon-music', label: '发现音乐' },
@@ -58,14 +63,14 @@ const myMusicNav = [
     { icon: 'icon-xiazai-', label: '下载管理' },
     { icon: 'icon-zuijinbofang', label: '最近播放' }
 ]
+const userStore = useUserStore();
 
-const login = () => {
-    const { isLogin } = useUserStore();
 
-    if (!isLogin) {
+
+const login = async () => {
+    if (!userStore.isLogin) {
         window.ipcRenderer.send('openLoginView')
     }
-
 }
 
 
