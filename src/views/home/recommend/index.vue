@@ -1,11 +1,17 @@
 <template>
-    <div class="h-full w-full p-16 pt-0 pb-0 my-6">
+    <div class=" w-full p-8 pt-0  pb-9  overflow-y-auto" style="height: 100%;" >
         <Banner/>
+        <SongList/>
+        <Exclusive/>
+        <newMiusicVue/>
     </div>
 </template>
 
 <script setup lang='ts'>
 import Banner from './banner.vue';
+import SongList from './songList.vue';
+import Exclusive from './exclusive.vue';
+import newMiusicVue from './newMiusic.vue';
     
 </script>
 

@@ -70,6 +70,10 @@
   content: "\ea0d";
 }
 
+.icon-24gl-play:before {
+  content: "\ea6d";
+}
+
 .icon-music:before {
   content: "\e6c5";
 }
@@ -112,6 +116,10 @@
 
 .icon-xiajiantou1:before {
   content: "\e60d";
+}
+
+.icon-rili:before {
+  content: "\e643";
 }
 
 .icon-suijibofang:before {

@@ -1,14 +1,25 @@
 <template>
-    <div class="relative h-full overflow-hidden" ref="banner">
+    <div class="relative w-full overflow-x-hidden" style="height: 200px;" ref="banner">
         <div
             v-for="(item, index) in bannerList"
-            class="w overflow-hidden absolute h-46 w-5/6 rounded-xl shadow duration-250 transition-transform"
-            :class="[index === curIndex ? 'active' : '']"
-            :style="{ transform: `translate3d(${imgWeidth * ((index - curIndex))}px,0,0)` }"
+            class="w absolute rounded-xl shadow duration-200 ease-in-out transition transform-gpu"
+            :class="[index === curIndex ? 'active ' : '']"
+            :style="{ transform: `translate3d(${520 * ((index - curIndex)) + 123}px,0,0)`, width: '520px' }"
             @click="bannerClick(index)"
         >
-            <img :key="index" :src="item.imageUrl" :class="['h-full', 'w-full', 'object-fill']" />
+            <div
+                class="h-full w-full bg-cover rounded-xl"
+                :style="{ backgroundImage: `url(${item.imageUrl})` }"
+            ></div>
         </div>
+    </div>
+    <div class="flex justify-center h-max mt-4 left-0 right-0">
+        <span
+            v-for="index in bannerList.length"
+            class="block w-1.5 h-1.5 rounded-full bg-slate-300 mr-3"
+            @mousemove="bannerClick(index)"
+            :class="[curIndex ===index ? 'bg-red-700':'' ]"
+        ></span>
     </div>
 </template>
 
@@ -16,7 +27,6 @@
 import { onMounted, ref, Ref, nextTick } from 'vue';
 import { httpGet } from '@/utils/index';
 const bannerList: Ref = ref([]);
-const imgWeidth = ref(0)
 const banner = ref(null)
 const curIndex = ref(1);
 let timer: NodeJS.Timeout | null = null;
@@ -25,57 +35,46 @@ onMounted(async () => {
 
     const { banners } = await httpGet('/banner', { type: 0 });
     bannerList.value = banners;
-    const firstBanner = bannerList.value[0]
+    const firstBanner = bannerList.value[0];
+    console.log(bannerList.value[bannerList.value.length-1]);
+    
     bannerList.value.unshift(bannerList.value[bannerList.value.length - 1]);
     bannerList.value.push(firstBanner);
-    let len = bannerList.value.length;
-    await nextTick()
-    imgWeidth.value = (banner.value as unknown as HTMLElement).querySelector('img')!.getBoundingClientRect().width - 80;
-
-    startLoop()
-
 })
 
 const bannerClick = (index: number) => {
-    if (index === bannerList.value.length - 1) {
+    if (index === bannerList.value.length - 2) {
         curIndex.value = 1;
     }
     curIndex.value = index;
-    startLoop()
 }
 
 
-const startLoop = () => {
-    timer && clearInterval(timer)
-    timer = setInterval(() => {
-        curIndex.value++;
-        if (bannerList.value.length - 1 === curIndex.value) {
-            curIndex.value = 1;
-            console.log(curIndex.value,'curIndex');
-        }
-    }, 6600)
-}
 
 </script>
 
 <style lang='scss'>
 .active {
-    z-index: 999;
-
-    transform: translate3d(4rem, 0, 0) !important;
+    height: 200px;
+    z-index: 999 !important;
+    transform: translate3d(123px, 0, 0) !important;
 }
 .w:not(.active) {
-    height: 12rem;
-    top: 1rem;
-    transition: transform 0.2s 0.06s;
-}
-.preActive {
-    z-index: 998;
-    left: 0;
-}
-.nextActive {
-    z-index: 998;
+    top: 10px;
+    height: 180px;
+    transition: transform 0.2s;
 
-    right: 0;
+    &::before {
+        @apply rounded-xl;
+
+        position: absolute;
+        left: 0;
+        content: "";
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 999;
+        background-color: rgba(0, 0, 0, 0.7);
+    }
 }
 </style>

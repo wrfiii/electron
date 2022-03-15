@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <TopMenuVue />
-        <section class="flex">
+        <section class="flex" style="height: calc(100% - 3rem);">
             <UserMenuVue />
             <router-view></router-view>
         </section>

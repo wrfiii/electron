@@ -80,5 +80,6 @@ const login = async () => {
 <style lang='scss'>
 .user-menu {
     width: $user-menu-wdith;
+    height: 100%;
 }
 </style>
