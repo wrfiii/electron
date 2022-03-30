@@ -1,21 +1,19 @@
 <template>
     <div class="wrap">
         <TopMenuVue />
-        <section class="flex" style="height: calc(100% - 3rem);">
+        <section class="flex" style="height: calc(100% - 3rem - 4rem);">
             <UserMenuVue />
             <router-view></router-view>
         </section>
+        <ControlVue/>
     </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import TopMenuVue from './top-menu.vue';
 import UserMenuVue from './user-menu.vue';
-
-
-
-
-
+import ControlVue from './control.vue';
 </script>
 
 <style lang="scss">

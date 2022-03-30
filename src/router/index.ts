@@ -39,6 +39,11 @@ const router: Array<RouteRecordRaw> = [
                 path:'rankList',
                 name:"rankList",
                 component: () => import('@/views/home/rankList/index.vue')
+            },
+            {
+                path:'dayDetail',
+                name:'dayDetail',
+                component: () => import('@/views/home/daySong/index.vue')
             }
         ]
     },

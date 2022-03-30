@@ -1,7 +1,7 @@
 <template>
     <Tiltle class="mt-8">独家放送</Tiltle>
     <div class="grid grid-cols-4 gap-5 mt-4">
-        <div v-for="(item, index) in list">
+        <div v-for="(item, index) in list" :key="index">
             <div
                 class="xl:h-36 h-24 bg-cover relative"
                 :key="index"
