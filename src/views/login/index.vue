@@ -59,6 +59,7 @@ const getCodeBase64 = async () => {
 }
 
 
+
 const chekCode = () => {
         timer && clearInterval(timer);
 
@@ -76,7 +77,9 @@ const chekCode = () => {
                                 clearInterval(timer!);
                                 const store = useUserStore()
                                 store.setCookie(cookie);
-                                window.ipcRenderer.send('closeLoginView');
+                                
+
+                                window.ipcRenderer.send('closeLoginView',true);
                         default:
                                 break;
                 }

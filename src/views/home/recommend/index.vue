@@ -16,9 +16,7 @@ import NewMiusicVue from './newMiusic.vue';
 import RecommendMvVue from './recommendMv.vue';
 import { onMounted } from 'vue';
 onMounted(() => {
-    document.querySelector('.index-view')?.addEventListener('scroll', function (e) {
-        console.log(e);
-    })
+  
 })
 </script>
 

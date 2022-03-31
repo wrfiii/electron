@@ -70,6 +70,7 @@ onMounted(() => {
     doubleClick(topBar.value!, () => {
         window.ipcRenderer.send('maximize')
     })
+
 })
 
 

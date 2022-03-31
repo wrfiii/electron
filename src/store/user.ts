@@ -8,26 +8,23 @@ export default defineStore({
         uid: '',
         isLogin: false,
         cookie: '',
-        profile:{
-            avatarUrl:'',
-            nickname:''
+        profile: {
+            avatarUrl: '',
+            nickname: ''
         }
     }),
     getters: {
 
     },
     actions: {
-        setState(key: string, val: any) {
-            this.name = val;
-        },
         async setCookie(cookie: string) {
             this.cookie = cookie;
-            const { profile } = await httpGet('/user/account').catch(()=>{
-                alert()
-            });
+        },
+        async getprofile() {
+            const { profile } = await httpGet('/user/account');
             this.isLogin = true;
             this.profile = profile;
-            alert(this.profile)
+            
         }
     }
 })

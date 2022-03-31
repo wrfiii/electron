@@ -1,10 +1,12 @@
-import { BrowserWindow, app, ipcRenderer } from 'electron'
+import { BrowserWindow, app, ipcMain,ipcRenderer } from 'electron'
 
 import getWindow from '../main';
 import path = require('path')
 
 
 let win: BrowserWindow = null;
+
+let parWIn:BrowserWindow =null
 
 export const openLoginView = () => {
     if (win) return;
@@ -32,8 +34,8 @@ export const openLoginView = () => {
     })
 }
 
-export const closeLoginView = ()=>{
-    // win = null;
+export const closeLoginView = (isLogin)=>{
+    parWIn = getWindow()
     win.close();
     win = null;
 }

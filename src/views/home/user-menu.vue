@@ -10,7 +10,6 @@
             <span class="ml-4 ft-12 text-sm text-slate-700 font-medium" >{{userStore.profile.nickname ? userStore.profile.nickname:'未登陆'}}</span>
             <img :src="userStore.profile.avatarUrl" v-if="userStore.profile.avatarUrl" alt="">
             <span class="iconfont icon-bofang ml-2 text-xs text-slate-400" v-else></span>
-
         </div>
 
         <div class="mt-5">
@@ -49,9 +48,12 @@
 
 <script setup lang='ts'>
 import useUserStore from '@/store/user';
-import { httpPost } from '@/utils/index';
-import { ref } from 'vue';
-
+import { httpPost,httpGet } from '@/utils/index';
+import { ref ,onMounted} from 'vue';
+const getProfile = async () => {
+        const { profile } = await httpGet('/user/account');
+        return profile
+}
 const userMenuNav = [
     { icon: 'icon-music', label: '发现音乐' },
     { icon: 'icon-radioguangbo', label: '私人FM' },
@@ -65,6 +67,9 @@ const myMusicNav = [
 ]
 const userStore = useUserStore();
 
+onMounted(()=>{
+        window.ipcRenderer.on('getProfile',getProfile)
+})
 
 
 const login = async () => {

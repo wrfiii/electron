@@ -12,7 +12,7 @@
             <div class="text-sm text-slate-700 mt-1.5">每日歌曲推荐</div>
         </div>
 
-        <div class v-for="(item, index) in personalizedList" :key="index">
+        <div class v-for="(item, index) in personalizedList" :key="index" @click="goPage(item)">
             <div
                 class="day relative rounded-md overflow-hidden"
                 :style="{ backgroundImage: `url(${item.picUrl})` }"
@@ -36,7 +36,7 @@ import { onMounted, ref, Ref } from 'vue';
 import { httpGet } from '@/utils';
 import { useRouter } from 'vue-router';
 
-import Tiltle from '@/components/title.vue'
+import Tiltle from '@/components/title.vue';
 
 interface Song {
     picUrl: string,
@@ -67,6 +67,17 @@ onMounted(async () => {
     const { result } = await getPersonalized();
     personalizedList.value = result;
 })
+
+const goPage = (item:any)=>{
+    rotuer.push({
+        name:'songList',
+        query:{
+            id:item.id,
+            name:item.name,
+            picUrl:item.picUrl
+        }
+    })
+}
 
 </script>
 

@@ -49,11 +49,12 @@ const bannerClick = (index: number) => {
 }
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
 .active {
     height: 200px;
     z-index: 999 !important;
     transform: translate3d(220px, 0, 0) !important;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
 }
 .preNode {
     transform: translate3d(0, 0, 0) !important;

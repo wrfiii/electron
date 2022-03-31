@@ -44,7 +44,12 @@ const router: Array<RouteRecordRaw> = [
                 path:'dayDetail',
                 name:'dayDetail',
                 component: () => import('@/views/home/daySong/index.vue')
-            }
+            },
+            {
+                path:'songList',
+                name:'songList',
+                component: () => import('@/views/home/songList/index.vue')
+            },
         ]
     },
     {
