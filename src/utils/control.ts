@@ -11,6 +11,10 @@ import { playList, curPlaySong, Song } from "./store";
 
 export const playType: Ref<PlayType> = ref(PlayType.quePlay);
 
+export const isPrivateFM = ref(false);
+
+export const isShowSongDetail = ref(false);
+
 
 export const changePlayType = () => {
     if (playType.value === PlayType.queLoopPlay) {

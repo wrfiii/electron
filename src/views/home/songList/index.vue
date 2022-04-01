@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full overflow-scroll">
+    <div class="h-full overflow-scroll flex-1">
         <div class="flex items-center h-max pt-4 pl-8">
             <div
                 class="w-48 h-48 bg-cover rounded-lg"
@@ -42,7 +42,7 @@
                         <span>歌曲数&emsp14;:</span>
                         <span class="ml-1">{{ playObj.trackCount }}</span>
                         <span class="ml-3">播放数&emsp14;:</span>
-                        <span class="ml-1 ext-slate-400">{{ computCont(playObj.subscribedCount) }}万</span>
+                        <span class="ml-1 ext-slate-400">{{ computCont(playObj.playCount) }}万</span>
                     </div>
                     <div class="mt-2 flex">
                         <span class="flex-none">简&emsp13;&emsp13;&emsp14;介&emsp14;:</span>
@@ -54,7 +54,7 @@
 
         <div class="ml-4 text-sm text-slate-700 mt-7 flex items-center nav">
             <span class="mr-6 texred pb-1 block" :class="[curNav == 'list' ? 'active' : '']" @click="curNav='list'">歌曲列表</span>
-            <span class="mr-6 pb-1 block" :class="[curNav == 'comment' ? 'active' : '']" @click="curNav='comment'">评论<span class=" text-slate-400 text-xs">({{playObj.trackCount}})</span></span>
+            <span class="mr-6 pb-1 block" :class="[curNav == 'comment' ? 'active' : '']" @click="curNav='comment'">评论<span class=" text-slate-400 text-xs">({{playObj.commentCount}})</span></span>
             <span class="pb-1 block" :class="[curNav === 'collect' ? 'active' : '']"  @click="curNav='collect'">收藏者</span>
         </div>
 
@@ -66,10 +66,10 @@
 import { useRoute, parseQuery } from 'vue-router';
 import { httpGet, firterSongParams } from '@/utils';
 import { onMounted, ref, Ref } from 'vue';
-import PlayAllVue from '@/components/playAll.vue';
+import PlayAllVue from '@/components/PlayAll.vue';
 import { formateTime } from '@/utils/formatTime';
 import SongTabVue from '@/components/songTab.vue';
-import { rPlayList, setCurPlaySongVal } from '@/utils/store';
+import { rPlayList, setCurPlaySongVal ,nextPlay } from '@/utils/store';
 
 
 const router = useRoute();
@@ -91,7 +91,12 @@ const computCont = (cont: number) => {
 onMounted(async () => {
     const data = await httpGet('/playlist/detail', { id });
     playObj.value = data.playlist;
-    tab.value!.getList(list = data.playlist.tracks.map(firterSongParams))
+    console.log(playObj.value,'--');
+        
+    tab.value?.getList(list = data.playlist.tracks.map(firterSongParams));
+    const {songs} = await httpGet('/song/detail',{ids:playObj.value.trackIds.map((v:any)=>v.id).join(',')})
+    tab.value?.getList(songs.map(firterSongParams))
+    
 })
 
 const playAll = () => {
@@ -99,7 +104,8 @@ const playAll = () => {
     setCurPlaySongVal(list[0]);
 }
 const play = (item: any) => {
-    setCurPlaySongVal(item)
+    nextPlay(item);
+    setCurPlaySongVal(item);
 }
 
 

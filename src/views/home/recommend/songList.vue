@@ -12,8 +12,8 @@
             <div class="text-sm text-slate-700 mt-1.5">每日歌曲推荐</div>
         </div>
 
-        <div class v-for="(item, index) in personalizedList" :key="index" @click="goPage(item)">
-            <div
+        <div class v-for="(item, index) in personalizedList" :key="index">
+            <!-- <div
                 class="day relative rounded-md overflow-hidden"
                 :style="{ backgroundImage: `url(${item.picUrl})` }"
             >
@@ -25,7 +25,8 @@
                     <span class="iconfont icon-bofang text-sm"></span>
                 </div>
             </div>
-            <div class="text-sm text-slate-700 mt-1.5 text-line-2">{{ item.name }}</div>
+            <div class="text-sm text-slate-700 mt-1.5 text-line-2">{{ item.name }}</div> -->
+            <Personalized :item='item'/>
         </div>
     </div>
 </template>
@@ -36,7 +37,8 @@ import { onMounted, ref, Ref } from 'vue';
 import { httpGet } from '@/utils';
 import { useRouter } from 'vue-router';
 
-import Tiltle from '@/components/title.vue';
+import Tiltle from '@/components/Title.vue';
+import Personalized from '@/components/Personalized.vue'
 
 interface Song {
     picUrl: string,

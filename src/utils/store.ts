@@ -7,6 +7,8 @@ export interface Song {
     picUrl: string,
     dt: number
     id: number
+    tns:Array<string>,
+    mv:number
 }
 
 
@@ -18,7 +20,9 @@ export const curPlaySong: Ref<Song> = ref({
     alName:'',
     songers:[],
     dt: 0,
-    picUrl: ''
+    picUrl: '',
+    tns:[],
+    mv:0
 })
 
 
@@ -44,6 +48,9 @@ export const removeSong = (song: Song) => {
 }
 
 export const nextPlay = (song: Song) => {
+    if(curPlaySong.value.id === song.id){
+        return
+    }
     let index = playList.value.findIndex(v => v.id == curPlaySong.value.id);
     playList.value.splice(index, 0, song)
 }

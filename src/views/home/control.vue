@@ -1,5 +1,6 @@
 <template>
-    <div class="relative">
+    <div class=" relative z-50  bg-white">
+        <div class="relative z-50">
         <div
             class="slider-bar w-3 h-3 bg-red-600 absolute rounded-full"
             :style="{ left: curPercentage + '%', top: '-4px' }"
@@ -13,6 +14,7 @@
     >
         <div class="flex items-center ml-3" style="width: 33vw;">
             <div
+                @click="showDetail"
                 class="w-11 h-11 bg-cover rounded-sm flex-none transition-all duration-75"
                 :style="{ backgroundImage: `url(${curPlaySong.picUrl})` }"
             ></div>
@@ -57,29 +59,32 @@
             <span class="iconfont icon-bofangliebiao text-slate-600 text-sm"></span>
         </div>
     </div>
+    </div>
 </template>
 
 <script setup lang='ts'>
 
 import { computed, ref, onMounted, Ref } from 'vue';
-
 import { curPlaySong ,setCurPlaySongVal} from '@/utils/store';
-
 import { formateSongTime } from '@/utils';
-
 import { formatCurTime, percentage, isPlay } from '@/utils/audio';
+import { playNext,playPre ,isShowSongDetail} from '@/utils/control';
 
-import { playNext,playPre } from '@/utils/control';
 
 const isTouch = ref(false);
 let oldpercentage = 0;
 const slider:Ref<HTMLElement|undefined> = ref();
 
+
 onMounted(()=>{
-    slider.value!.addEventListener('mousemove',(e)=>{
-            console.log(e);
-    })
+    // slider.value!.addEventListener('mousemove',(e)=>{
+    //         console.log(e);
+    // })
 })
+
+const showDetail = ()=>{
+    isShowSongDetail.value =! isShowSongDetail.value
+}
 
 
 

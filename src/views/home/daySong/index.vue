@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full overflow-scroll h-full">
+    <div class="w-full overflow-scroll h-full flex-1">
         <div class="mt-4">
             <p class="text-black text-2xl ml-9">每日歌曲推荐</p>
             <p class="text-xs text-gray-400 mt-2 ml-9">根据你的音乐口味生成, 每天6:00更新</p>
@@ -16,18 +16,21 @@
 <script setup lang='ts'>
 import { httpGet, formateSongTime,firterSongParams } from "@/utils";
 import { onMounted, reactive, Ref, ref } from "vue";
-import { Song, curPlaySong, setCurPlaySongVal, rPlayList } from '@/utils/store';
-import PlayAllVue from "@/components/playAll.vue";
+import { Song, curPlaySong, setCurPlaySongVal, rPlayList ,nextPlay } from '@/utils/store';
+import PlayAllVue from "@/components/PlayAll.vue";
 import SongTab from "@/components/songTab.vue";
 let songList: Array<Song>= [];
 const Tab:Ref<{getList:(val:any)=>void}|null> = ref(null);
 
 onMounted(async () => {
-    const { dailySongs } = await httpGet('/recommend/songs')
-    Tab.value!.getList(songList =dailySongs.map(firterSongParams));
+    const { dailySongs } = await httpGet('/recommend/songs');
+
+    
+    Tab.value!.getList(songList = dailySongs.map(firterSongParams));
 })  
 const play = (item: any) => {
-    setCurPlaySongVal(item)
+    nextPlay(item);
+    setCurPlaySongVal(item);
 }
 
 const addPlayAll = () => {

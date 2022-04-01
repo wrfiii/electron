@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang='ts'>
-import Tiltle from '@/components/title.vue';
+import Tiltle from '@/components/Title.vue';
 import { onMounted, ref, Ref } from 'vue';
 import { httpGet } from '@/utils';
 const list: Ref<Array<{ picUrl: string, name: string, id: number, song: { artists: Array<any> } }>> = ref([]);

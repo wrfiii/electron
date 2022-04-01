@@ -1,6 +1,6 @@
 <template>
     <div
-        class="relative overflow-x-hidden  xl:w-10/12 m-auto"
+        class="relative overflow-x-hidden  xl:w-10/12 m-auto z-0"
         style="height: 200px;"
         ref="banner"
     >

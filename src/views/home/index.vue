@@ -5,6 +5,9 @@
             <UserMenuVue />
             <router-view></router-view>
         </section>
+        <div class="relative">
+            <PlayViewVue/>
+        </div>
         <ControlVue/>
     </div>
 </template>
@@ -14,12 +17,14 @@ import { onMounted } from 'vue';
 import TopMenuVue from './top-menu.vue';
 import UserMenuVue from './user-menu.vue';
 import ControlVue from './control.vue';
+import PlayViewVue from './playView.vue';
 </script>
 
 <style lang="scss">
 .wrap {
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
 }
 section {
     height: calc(100% - 3rem);

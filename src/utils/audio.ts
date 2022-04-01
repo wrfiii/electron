@@ -15,7 +15,7 @@ let timer: NodeJS.Timeout | null = null;
 
 let curSongTime = 0;
 
-export const formatCurTime = ref('');
+export const formatCurTime = ref(formateSecendTime(0));
 export const percentage = ref(0);
 
 

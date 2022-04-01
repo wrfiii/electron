@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang='ts'>
-import Tiltle from '@/components/title.vue'
+import Tiltle from '@/components/Title.vue'
 import { httpGet } from '@/utils';
 import { onMounted, ref, Ref } from 'vue';
 
