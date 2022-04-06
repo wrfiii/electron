@@ -2,7 +2,7 @@
     <div class="h-full overflow-scroll flex-1">
         <div class="flex items-center h-max pt-4 pl-8">
             <div
-                class="w-48 h-48 bg-cover rounded-lg"
+                class="w-48 h-48 bg-cover rounded-lg flex-none"
                 :style="{ backgroundImage: `url(${picUrl})` }"
             ></div>
 
@@ -46,7 +46,7 @@
                     </div>
                     <div class="mt-2 flex">
                         <span class="flex-none">简&emsp13;&emsp13;&emsp14;介&emsp14;:</span>
-                        <span class="ml-1">{{ playObj.description }}</span>
+                        <span class="ml-1 mr-16">{{ playObj.description }}</span>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,3 @@
-import { creatAudio } from './utils/audio';
 import { createApp } from 'vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 
@@ -14,4 +13,3 @@ const router = createRouter({ routes, history: createWebHashHistory() })
 
 createApp(App).use(createPinia()).use(router).mount('#app');
 
-creatAudio();

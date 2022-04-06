@@ -42,8 +42,6 @@ let songList: Ref<Array<Song>> = ref([]);
 const emit = defineEmits<{ (event: 'play', item: Song): void }>()
 
 const play = (item: Song) => {
-    console.log(item,'--');
-    
     emit('play', item)
 }
 const getList = (list: Array<Song>) => {

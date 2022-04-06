@@ -24,8 +24,6 @@ const Tab:Ref<{getList:(val:any)=>void}|null> = ref(null);
 
 onMounted(async () => {
     const { dailySongs } = await httpGet('/recommend/songs');
-
-    
     Tab.value!.getList(songList = dailySongs.map(firterSongParams));
 })  
 const play = (item: any) => {

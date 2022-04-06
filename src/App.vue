@@ -1,5 +1,9 @@
 <script setup lang="ts">
+// window.ipcRenderer.on('closeLoginView',()=>{
 
+//     alert()
+  
+// })
 
 </script>
 

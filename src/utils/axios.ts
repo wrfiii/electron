@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
     baseURL: 'http://localhost:3000',
-    timeout: 3000,
+    timeout: 5000,
     withCredentials: true
 });
 
@@ -13,10 +13,20 @@ instance.interceptors.response.use((response)=>{
         return Promise.reject(null);
 })
 
+
 export const httpGet = (url: string, params: any = {}) :Promise<any>=> {
+
+
     return instance.request({
         method: 'get',
         params,
+        url
+    })
+}
+
+export const httpOption = (url:string)=>{
+    return instance.request({
+        method: 'options',
         url
     })
 }

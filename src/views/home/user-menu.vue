@@ -68,7 +68,7 @@ const myMusicNav = [
 const userStore = useUserStore();
 
 onMounted(()=>{
-        window.ipcRenderer.on('getProfile',getProfile)
+        // window.ipcRenderer.on('getProfile',getProfile)
 })
 
 

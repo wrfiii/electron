@@ -52,5 +52,7 @@ export const nextPlay = (song: Song) => {
         return
     }
     let index = playList.value.findIndex(v => v.id == curPlaySong.value.id);
-    playList.value.splice(index, 0, song)
+    if(index===-1){
+        playList.value.splice(index, 0, song)
+    }
 }

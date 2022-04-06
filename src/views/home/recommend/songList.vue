@@ -13,19 +13,6 @@
         </div>
 
         <div class v-for="(item, index) in personalizedList" :key="index">
-            <!-- <div
-                class="day relative rounded-md overflow-hidden"
-                :style="{ backgroundImage: `url(${item.picUrl})` }"
-            >
-                <div class="flex justify-end pr-1.5 pt-1 text-xs text-white">
-                    <span class="iconfont icon-24gl-play text-slate-100 mr-1"></span>
-                    <span>{{ fillterNum(item.playCount) }}万</span>
-                </div>
-                <div class="play-icon absolute">
-                    <span class="iconfont icon-bofang text-sm"></span>
-                </div>
-            </div>
-            <div class="text-sm text-slate-700 mt-1.5 text-line-2">{{ item.name }}</div> -->
             <Personalized :item='item'/>
         </div>
     </div>

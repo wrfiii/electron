@@ -34,8 +34,10 @@ export const openLoginView = () => {
     })
 }
 
-export const closeLoginView = (isLogin)=>{
-    parWIn = getWindow()
+export const closeLoginView = (event,arg)=>{
+    parWIn = getWindow();
+    parWIn.blur();
+    // parWIn..send('closeLoginView')
     win.close();
     win = null;
 }
