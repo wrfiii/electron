@@ -45,13 +45,13 @@
 
         <div class="flex items-center">
             <span class="iconfont icon-xihuan mr-7 text-red-700"></span>
-            <span class="iconfont icon-047caozuo_shangyishou mr-4 text-red-700" @click="setCurPlaySongVal(playPre())"></span>
+            <span class="iconfont icon-047caozuo_shangyishou mr-4 text-red-700" @click="setCurPlaySongVal(getPlayPre())"></span>
             <span
                 @click="chekPlay"
                 class="iconfont mr-4 w-8 h-8 text-sm flex items-center justify-center bg-red-600 rounded-full text-white"
                 :class="[isPlay ? 'icon-zanting' : 'icon-bofang']"
             ></span>
-            <span class="iconfont icon-49xiayishou" @click="setCurPlaySongVal(playNext())"></span>
+            <span class="iconfont icon-49xiayishou" @click="setCurPlaySongVal(getPlayNext())"></span>
         </div>
 
         <div class="pr-8 flex justify-end" style="width: 33vw;">
@@ -68,7 +68,7 @@ import { computed, ref, onMounted, Ref } from 'vue';
 import { curPlaySong ,setCurPlaySongVal} from '@/utils/store';
 import { formateSongTime } from '@/utils';
 import { formatCurTime, percentage, isPlay } from '@/utils/audio';
-import { playNext,playPre ,isShowSongDetail} from '@/utils/control';
+import { getPlayNext,getPlayPre ,isShowSongDetail} from '@/utils/control';
 
 
 const isTouch = ref(false);

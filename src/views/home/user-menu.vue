@@ -1,5 +1,5 @@
 <template>
-    <div class="flex user-menu bg-gray-100 h-full flex-col">
+    <div class="flex user-menu bg-gray-50 h-full flex-col">
         <div class="flex items-center pl-2 pt-2" @click="login">
             <div class="bg-gray-300 rounded-full">
                 <span

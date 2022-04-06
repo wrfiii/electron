@@ -14,17 +14,17 @@
 </template>
 
 <script setup lang='ts'>
-import { httpGet, formateSongTime,firterSongParams } from "@/utils";
+import { httpGet, formateSongTime,filterSongParams } from "@/utils";
 import { onMounted, reactive, Ref, ref } from "vue";
 import { Song, curPlaySong, setCurPlaySongVal, rPlayList ,nextPlay } from '@/utils/store';
 import PlayAllVue from "@/components/PlayAll.vue";
-import SongTab from "@/components/songTab.vue";
+import SongTab from "@/components/SongTab.vue";
 let songList: Array<Song>= [];
 const Tab:Ref<{getList:(val:any)=>void}|null> = ref(null);
 
 onMounted(async () => {
     const { dailySongs } = await httpGet('/recommend/songs');
-    Tab.value!.getList(songList = dailySongs.map(firterSongParams));
+    Tab.value!.getList(songList = dailySongs.map(filterSongParams));
 })  
 const play = (item: any) => {
     nextPlay(item);

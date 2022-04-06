@@ -2,7 +2,7 @@ const audio: HTMLAudioElement = new Audio();
 
 import { watch, ref } from "vue";
 import { curPlaySong } from "./store";
-import { getNextSong } from "./control";
+import { setCurPlay, getPlayNext } from "./control";
 import { formateSecendTime } from "./formatTime";
 
 import { httpGet, httpOption } from "./axios";
@@ -10,7 +10,7 @@ import { httpGet, httpOption } from "./axios";
 
 export let wordFn = {
     cb: (val: any) => { },
-    restCb : ()=>{}
+    restCb: () => { }
 };
 
 
@@ -25,36 +25,47 @@ export const curPlayTime = ref(0)
 
 export const isPlay = ref(false);
 
-
-
-audio.addEventListener("canplay", () => {
-    isPlay.value = true;
-    wordFn.restCb();
-})
 audio.addEventListener('error', (e) => {
     console.log(e, 'error');
 })
 audio.addEventListener('waiting', (e) => {
     console.log(e, 'waiting');
 })
+
+
+const playVidio = () => {
+    isPlay.value = true;
+    setTimeout(() => {
+        audio.play();
+    }, 150);
+}
+
 audio.addEventListener("timeupdate", () => {
     percentage.value = audio.currentTime / audio.duration * 100;
     formatCurTime.value = formateSecendTime(audio.currentTime);
-    wordFn.cb(parseInt(audio.currentTime+''))
+    wordFn.cb(parseInt(audio.currentTime + ''))
+})
+audio.addEventListener('ended', () => {
+    setCurPlay()
 })
 
-audio.addEventListener('ended', () => {
-    getNextSong();
+audio.addEventListener('error',()=>{
+    alert('播放异常')
 })
+
+
+audio.addEventListener('canplay', playVidio);
 
 watch(() => curPlaySong.value.id, async (id) => {
+    isPlay.value = false;
     const { success } = await httpGet('/check/music', { id })
     if (success) {
         let data = await httpGet('/song/url', { id });
         curSongTime = curPlaySong.value.dt;
         audio.src = data[0].url;
-        audio.play();
+        wordFn.restCb();
     }
+    getPlayNext()
 })
 
 

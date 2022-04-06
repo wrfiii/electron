@@ -27,6 +27,8 @@ export const curPlaySong: Ref<Song> = ref({
 
 
 export const setCurPlaySongVal = (val: Song) => {
+    console.log(val,'--');
+    
     curPlaySong.value = val;   
 }
 

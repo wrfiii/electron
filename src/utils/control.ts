@@ -24,17 +24,17 @@ export const changePlayType = () => {
     playType.value++;
 }
 
-export const playNext = () => {
+export const getPlayNext = () => {
     let index = playList.value.findIndex((v) => v.id === curPlaySong.value.id);
     return playList.value[index + 1] || playList.value[0]
 }
 
-export const playPre = () => {
+export const getPlayPre = () => {
     let index = playList.value.findIndex((v) => v.id === curPlaySong.value.id);
     return playList.value[index - 1] || playList.value[playList.value.length-1]
 }
 
-export const getNextSong = () => {
+export const setCurPlay = () => {
     let nextSong: Song;
     switch (playType.value) {
         case PlayType.uniPlay:
@@ -44,10 +44,10 @@ export const getNextSong = () => {
             nextSong = playList.value[Math.floor(Math.random() * playList.value.length)]
             break;
         case PlayType.quePlay:
-            nextSong = playNext()
+            nextSong = getPlayNext()
             break;
         case PlayType.queLoopPlay:
-            nextSong = playNext()
+            nextSong = getPlayNext()
             break;
         default: nextSong = curPlaySong.value
             break;

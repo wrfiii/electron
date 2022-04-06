@@ -3,8 +3,9 @@
         <div class="flex items-center h-max pt-4 pl-8">
             <div
                 class="w-48 h-48 bg-cover rounded-lg flex-none"
-                :style="{ backgroundImage: `url(${picUrl})` }"
-            ></div>
+            >
+                <img :src="picUrl" class=" w-full h-full bg-cover" alt="">
+            </div>
 
             <div class="pl-8 text-xs">
                 <div class="flex items-center">
@@ -64,11 +65,11 @@
 
 <script setup lang='ts'>
 import { useRoute, parseQuery } from 'vue-router';
-import { httpGet, firterSongParams } from '@/utils';
+import { httpGet, filterSongParams } from '@/utils';
 import { onMounted, ref, Ref } from 'vue';
 import PlayAllVue from '@/components/PlayAll.vue';
 import { formateTime } from '@/utils/formatTime';
-import SongTabVue from '@/components/songTab.vue';
+import SongTabVue from '@/components/SongTab.vue';
 import { rPlayList, setCurPlaySongVal ,nextPlay } from '@/utils/store';
 
 
@@ -93,9 +94,9 @@ onMounted(async () => {
     playObj.value = data.playlist;
     console.log(playObj.value,'--');
         
-    tab.value?.getList(list = data.playlist.tracks.map(firterSongParams));
+    tab.value?.getList(list = data.playlist.tracks.map(filterSongParams));
     const {songs} = await httpGet('/song/detail',{ids:playObj.value.trackIds.map((v:any)=>v.id).join(',')})
-    tab.value?.getList(songs.map(firterSongParams))
+    tab.value?.getList(songs.map(filterSongParams))
     
 })
 

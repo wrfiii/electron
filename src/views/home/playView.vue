@@ -4,8 +4,8 @@
             <div>
                 <div class="cd rounded-full" :class="[isPlay ? 'active' : '']">
                     <div v-for="(item, index) in 13" :class="'l' + index" :key="index"></div>
-                    <div class="img-view">
-                        <img :src="curPlaySong.picUrl" class="bg-slate-400" />
+                    <div class="img-view bg-slate-400">
+                        <img :src="curPlaySong.picUrl" class="bg-slate-400 bg-cover" />
                     </div>
                 </div>
                 <div class="icons flex pt-14">
@@ -20,7 +20,7 @@
             </div>
 
             <div class="pl-20 flex-1 mr-24">
-                <div class="flex items-center">
+                <div class="flex items-center from-white">
                     <span class="text-2xl text-black">{{ curPlaySong.name }}</span>
                     <span
                         v-if="curPlaySong.mv"
@@ -41,7 +41,7 @@
                 <div class="relative flex-1 border-r border-solid border-slate-200">
                     <div class="_shadow h-12 pointer-events-none absolute inset-x-0 z-10"></div>
                     <div
-                        class="mt-6 flex flex-col h-full overflow-scroll wrods"
+                        class="mt-6 flex relative flex-col h-full overflow-scroll wrods"
                         style="height: calc(400px - 1rem - 0.75rem - 1.5rem );"
                     >
                         <span
@@ -59,18 +59,84 @@
                 </div>
             </div>
         </div>
+        <div class="flex">
+            <div class="flex-1">
+                <div>
+                    <span class="text-slate-800 text-1xl font-semibold mr-6">听友评论</span>
+                    <span class="text-xs text-slate-500">(已有{{ commentNum }}条评论)</span>
+                </div>
+                <div class="mt-2">
+                    <div
+                        type="text"
+                        class="flex relative items-center w-full border text-slate-300 pt-1.5 text-xs pb-1.5 border-slate-300 rounded-md"
+                    >
+                        <PencilIcon class="w-4 h-4 ml-2" />
+                        <span>发表评论</span>
+                        <span
+                            class="absolute right-2 -top-0.5 text-slate-500 font-extralight text-xl"
+                        >@</span>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <div class="mb-3">
+                        <span class="text-slate-800 text-sm font-semibold mr-6">精彩评论</span>
+                    </div>
+                    <div class="flex mb-3 pb-1" v-for="(item, index) in commentList" :key="index">
+                        <div
+                            class="flex-none w-8 h-8 bg-cover mr-2.5 mt-1 rounded-full bg-slate-400"
+                        >
+                            <img
+                                :src="item.avatarUrl"
+                                class="w-full h-full object-cover rounded-full"
+                                alt
+                            />
+                        </div>
+                        <div class="flex-1 border-b border-neutral-200 pb-3">
+                            <div class="leading-5 text-xs mb-1">
+                                <span class="text-sky-500 flex-none mr-0.5">{{ item.nickname }}:</span>
+                                <span class="text-slate-800">{{ item.content }}</span>
+                            </div>
+                            <div
+                                v-for="(_item, index) in item.beReplied"
+                                class="text-xs leading-5 mt-0.5 pb-1.5 pt-1.5 pr-3 rounded-sm  bg-stone-200 pl-1.5"
+                                :key="index"
+                            >
+                                <span class="text-sky-500 mr-0.5">@{{ _item.nickname }}:</span>
+                                <span>{{ _item.content }}</span>
+                            </div>
+                            <div class="flex justify-between mt-2 text-xs text-slate-500">
+                                <div>{{ item.time }}</div>
+                                <div class="flex text-slate-500 font-light">
+                                    <ThumbUpIcon class="w-4 h-4 mr-3.5" />
+                                    <ExternalLinkIcon class="w-4 h-4 mr-0.5" />
+                                    <span v-if="item.likedCount">{{ item.likedCount }}</span>
+                                    <ChatAltIcon class="w-4 h-4 ml-3.5" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-96"></div>
+        </div>
     </div>
 </template>
 
 <script setup lang='ts'>
-import { HeartIcon, DownloadIcon, FolderDownloadIcon, ShareIcon } from '@heroicons/vue/outline';
+import { HeartIcon, DownloadIcon, FolderDownloadIcon, ShareIcon, PencilIcon, ThumbUpIcon, ChatAltIcon, ExternalLinkIcon } from '@heroicons/vue/outline';
 
 import { watch, defineComponent, ref, Ref, nextTick } from 'vue'
 import { isShowSongDetail } from '@/utils/control';
 import { curPlaySong } from '@/utils/store';
 import { isPlay, curPlayTime, wordFn } from '@/utils/audio';
 import { httpGet } from '@/utils';
+import { forMateCommentTime, filterMomment } from '@/utils'
+import { Comment } from '@/utils/fillterPrams';
+const commentNum = ref(0);
 
+const page = ref(0);
+const before = ref(0)
 
 const icons = [
     {
@@ -87,28 +153,26 @@ const icons = [
     }
 ]
 
-let songWord: Ref<Array<{ key: number, val: string }>> = ref([])
+let songWord: Ref<Array<{ key: number, val: string }>> = ref([]);
+const commentList: Ref<Array<Comment>> = ref([])
 
-
-watch(() => curPlaySong.value.id, async (id) => {
+const getWords = async (id: number) => {
     const { lrc } = await httpGet('/lyric', { id });
-    const word: string = lrc.lyric;
-    let wordMap: { key: number; val: string; }[] = [];
-    let mathWord = [...word.matchAll(/(\[(.*)\])(.*)/g)]
-    mathWord.forEach((arr: any, index: number) => {
+    let mathWord = [...lrc.lyric.matchAll(/(\[(.*)\])(.*)/g)]
+    return mathWord.map((arr: any, index: number) => {
         let key = arr[2];
         let val = arr[3];
         let m = Number(key.split(':')[0] * 60);
         let s = Number(parseInt(key.split(':')[1]));
         key = Number(m + s);
-        wordMap.push({ key, val })
+        return ({ key, val })
     })
-    songWord.value = wordMap;
-    await nextTick();
-    let preEl: HTMLSpanElement | null = null;
+}
 
+const setWordFn = () => {
+    let preEl: HTMLSpanElement | null = null;
     wordFn.cb = (curTime: string) => {
-        if (!isPlay.value || !isShowSongDetail.value || wordMap.length === 0) return;
+        if (!isPlay.value || !isShowSongDetail.value || songWord.value.length === 0) return;
         let words = document.querySelector('.wrods');
         let $elArr = words?.querySelectorAll('span');
         let findCurEL = false;
@@ -124,16 +188,27 @@ watch(() => curPlaySong.value.id, async (id) => {
             preEl?.classList.add('active')
         }
         if (preEl && preEl!.offsetTop - 150 > 0) {
-            // words?.animate([{'scrollTop':preEl!.offsetTop - 180 + 'px' }],160)
-            // words?.animate([{scrollTop: 'rotate(360deg)'}],300)
             words?.scrollTo({ top: preEl!.offsetTop - 150, behavior: 'smooth' })
-            // words!.scrollTop = preEl!.offsetTop - 180
         }
     }
     wordFn.restCb = () => {
         let words = document.querySelector('.wrods');
         words?.scrollTo({ 'top': 0 })
     }
+}
+
+const getComment = async (id: number) => {
+    const { comments, hotComments, total } = await httpGet('/comment/music', { id, offset: page.value, before: before.value });
+    commentNum.value = total;
+    commentList.value = comments.map(filterMomment)
+}
+
+
+watch(() => curPlaySong.value.id, async (id) => {
+    songWord.value = await getWords(id);
+    await nextTick();
+    setWordFn();
+    getComment(id);
 })
 
 </script>
@@ -141,20 +216,6 @@ watch(() => curPlaySong.value.id, async (id) => {
 <style lang='scss' scoped>
 .playView {
     height: 0;
-}
-@for $i from 1 through 13 {
-    .l#{$i} {
-        width: calc(66% + #{$i} * 2.5%);
-        height: calc(66% + #{$i} * 2.5%);
-        box-shadow: 0 0 1.5px #000;
-        border-radius: 50%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
-    }
 }
 
 .img-view {
@@ -180,7 +241,8 @@ watch(() => curPlaySong.value.id, async (id) => {
 .subView {
     width: 100vw;
     height: 0;
-    @apply bg-gray-50;
+
+    @apply bg-neutral-50;
     transition: all 0.36s ease-in-out;
     height: calc(100vh - 4rem);
     transform: translate3d(0, 0, 0);
@@ -214,11 +276,8 @@ watch(() => curPlaySong.value.id, async (id) => {
     }
 }
 
-// --tw-bg-opacity:.6;
-//         background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 .wrods {
     span {
-        // position: relative;
         transition: all 0.16s;
         &.active {
             color: rgb(41, 34, 34);
@@ -228,25 +287,15 @@ watch(() => curPlaySong.value.id, async (id) => {
             margin-bottom: 48px;
         }
     }
-    &::before {
-        // position: absolute;
-        // left: 0;
-        // top: 0;
-        // content: "";
-        // width: 100%;
-        // height: 16px;
-        // --tw-bg-opacity: 0.6;
-        // background-color: rgb(249 250 251 / var(--tw-bg-opacity));
-    }
 }
 ._shadow {
-    --tw-gradient-from: rgb(249 250 251);
-    --tw-gradient-stops: var(--tw-gradient-from),
-        var(--tw-gradient-to, hsla(0, 0%, 100%, 0));
-    position: absolute;
-    opacity: 0.8;
-    z-index: 0;
-    width: 100%;
-    background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+    // position: absolute;
+    // z-index: 0;
+    // width: 100%;
+    // // @apply bg-gray-50;
+    // z-index: 1;
+    // // background-image: linear-gradient(to bottom , rgba(249, 250, 251,.1),rgb(249, 250, 251,.5));
+    // opacity: .4;
+    // background-image: linear-gradient(to bottom, rgba(249, 250, 251, .3), rgba(249, 250, 251, 0));
 }
 </style>
