@@ -52,10 +52,10 @@
                         >{{ item.val }}</span>
                         <span
                             v-if="songWord.length === 0"
-                            class="text-base n-word absolute left-1/2 right-1/2 m-auto translate-x-1/2 translate-y-1/2 text-slate-700"
+                            class="text-base   text-center block mt-28   text-slate-700"
                         >暂无歌词</span>
                     </div>
-                    <div class="_shadow h-12 pointer-events-none -bottom-4 absolute left-0 z-10"></div>
+                    <div class="_shadow h-12 pointer-events-none -bottom-4  absolute left-0 z-10"></div>
                 </div>
             </div>
         </div>
@@ -82,40 +82,13 @@
                     <div class="mb-3">
                         <span class="text-slate-800 text-sm font-semibold mr-6">精彩评论</span>
                     </div>
-                    <div class="flex mb-3 pb-1" v-for="(item, index) in commentList" :key="index">
-                        <div
-                            class="flex-none w-8 h-8 bg-cover mr-2.5 mt-1 rounded-full bg-slate-400"
-                        >
-                            <img
-                                :src="item.avatarUrl"
-                                class="w-full h-full object-cover rounded-full"
-                                alt
-                            />
-                        </div>
-                        <div class="flex-1 border-b border-neutral-200 pb-3">
-                            <div class="leading-5 text-xs mb-1">
-                                <span class="text-sky-500 flex-none mr-0.5">{{ item.nickname }}:</span>
-                                <span class="text-slate-800">{{ item.content }}</span>
-                            </div>
-                            <div
-                                v-for="(_item, index) in item.beReplied"
-                                class="text-xs leading-5 mt-0.5 pb-1.5 pt-1.5 pr-3 rounded-sm  bg-stone-200 pl-1.5"
-                                :key="index"
-                            >
-                                <span class="text-sky-500 mr-0.5">@{{ _item.nickname }}:</span>
-                                <span>{{ _item.content }}</span>
-                            </div>
-                            <div class="flex justify-between mt-2 text-xs text-slate-500">
-                                <div>{{ item.time }}</div>
-                                <div class="flex text-slate-500 font-light">
-                                    <ThumbUpIcon class="w-4 h-4 mr-3.5" />
-                                    <ExternalLinkIcon class="w-4 h-4 mr-0.5" />
-                                    <span v-if="item.likedCount">{{ item.likedCount }}</span>
-                                    <ChatAltIcon class="w-4 h-4 ml-3.5" />
-                                </div>
-                            </div>
-                        </div>
+                    <CommentVue v-for="(item, index) in $hotComments" :key="item.userId"  :item="item"/>
+                </div>
+                <div class="mt-8">
+                    <div class="mb-3">
+                        <span class="text-slate-800 text-sm font-semibold mr-6">最近评论</span>
                     </div>
+                    <CommentVue v-for="(item, index) in $comments" :key="item.userId"  :item="item"/>
                 </div>
             </div>
             <div class="w-96"></div>
@@ -131,12 +104,16 @@ import { isShowSongDetail } from '@/utils/control';
 import { curPlaySong } from '@/utils/store';
 import { isPlay, curPlayTime, wordFn } from '@/utils/audio';
 import { httpGet } from '@/utils';
-import { forMateCommentTime, filterMomment } from '@/utils'
-import { Comment } from '@/utils/fillterPrams';
-const commentNum = ref(0);
+import { forMateCommentTime, filterMomment  } from '@/utils'
+import {CommentObj} from '@/utils/fillterPrams';
+import CommentVue from '@/components/Comment.vue';
 
+
+const commentNum = ref(0);
 const page = ref(0);
-const before = ref(0)
+const before = ref(0);
+const $hotComments:Ref<Array<CommentObj>> = ref([]);
+const $comments:Ref<Array<CommentObj>>  = ref([]);
 
 const icons = [
     {
@@ -154,7 +131,6 @@ const icons = [
 ]
 
 let songWord: Ref<Array<{ key: number, val: string }>> = ref([]);
-const commentList: Ref<Array<Comment>> = ref([])
 
 const getWords = async (id: number) => {
     const { lrc } = await httpGet('/lyric', { id });
@@ -200,7 +176,10 @@ const setWordFn = () => {
 const getComment = async (id: number) => {
     const { comments, hotComments, total } = await httpGet('/comment/music', { id, offset: page.value, before: before.value });
     commentNum.value = total;
-    commentList.value = comments.map(filterMomment)
+    $hotComments.value = hotComments.map(filterMomment);
+    // console.log(    $comments.value);
+    
+    $comments.value  =  comments.map(filterMomment)
 }
 
 

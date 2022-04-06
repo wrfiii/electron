@@ -18,13 +18,13 @@
         </div>
     </div>
     <div class="flex justify-center h-max mt-4 left-0 right-0">
-        <span
+        <!-- <span
             v-for="index in 8"
             :key="index"
             class="block w-1.5 h-1.5 rounded-full bg-slate-300 mr-3"
             @click="bannerClick(index)"
             :class="[curIndex === index ? 'bg-red-700' : '']"
-        ></span>
+        ></span> -->
     </div>
 </template>
 

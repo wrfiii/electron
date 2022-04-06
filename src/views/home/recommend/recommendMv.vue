@@ -32,7 +32,7 @@ onMounted(async () => {
 
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
 .mc {
     background-color: rgba(0, 0, 0, 0.5);
     transform: translate3d(0, -100%, 0);

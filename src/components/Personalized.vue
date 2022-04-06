@@ -1,6 +1,6 @@
 <template>
     <div
-        class="day relative rounded-md overflow-hidden"
+        class="day  bg-view relative rounded-md overflow-hidden  bg-gray-100"
         :style="{ backgroundImage: `url(${item.picUrl})` }"
         @click="goRote(item)"
     >
@@ -37,5 +37,8 @@ const goRote = (item: any) => {
 
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
+.bg-view{
+    transition: backGround .16s;
+}
 </style>

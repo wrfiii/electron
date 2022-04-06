@@ -17,7 +17,7 @@
                 <div class="flex relative mr-4">
                     <input
                         type="text"
-                        class="rounded-rand outline-none h-6 w-36 rounded-full py-3 px-2 pl-6 bg-slate-200"
+                        class="rounded-rand outline-none h-6 w-36 rounded-full py-3 px-2 pl-6  bg-white"
                     />
                     <SearchIcon class="h-4 w-4 absolute top-1 left-1.5" />
                 </div>

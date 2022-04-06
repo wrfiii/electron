@@ -60,4 +60,5 @@ export function forMateCommentTime(time: number | any) {
   } else if (d_days >= 30) {
     return Y + '-' + M + '-' + D + ' ' + H + ':' + m;
   }
+  return ''
 }

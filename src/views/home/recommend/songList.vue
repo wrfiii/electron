@@ -98,7 +98,6 @@ const goPage = (item:any)=>{
             opacity: 1;
         }
     }
-
     &::before {
         @extend .play-icon;
     }

@@ -1,13 +1,14 @@
 import { forMateCommentTime } from "./formatTime";
 
 
-export interface Comment {
+export  interface CommentObj {
     content: string
     time: string
     avatarUrl: string
     userId: number
     nickname: string
-    likedCount: number
+    likedCount: number,
+    beReplied:Array<any>
 }
 
 export const filterSongParams = (item: any) => {
@@ -29,7 +30,7 @@ export const filterSongParams = (item: any) => {
 }
 
 
-export const filterMomment = (item: any) => {
+export const filterMomment = (item: any):CommentObj => {
     return {
         content: item.content,
         time: forMateCommentTime(item.time),
